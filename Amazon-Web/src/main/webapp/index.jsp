@@ -9,5 +9,11 @@
 <h2>	       	redirectPort="8443" </h2>
 <h2>-----------------------------------------------</h2>
 <h2>Server port="8005" shutdown="SHUTDOWN" </h2>
+<h2>-----------------------------------------------</h2>
+<h2>Connector protocol="AJP/1.3"<h2>
+<h2>          address="::1"<h2>
+<h2>          port="8100"<h2>
+<h2>          redirectPort="8443"<h2>
+		---
 </body>
 </html>
