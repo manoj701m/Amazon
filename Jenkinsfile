@@ -61,6 +61,8 @@ pipeline {
             steps {
                 script {
                     // Run Docker container
+                    sh "docker stop --force ${docker ps -a -q}"
+                    sh "docker rm $(docker ps -a -q)"
                     sh "docker run -d -p 9001:8080 ${DOCKERHUB_USERNAME}/${IMAGE_NAME}:${TAG}"
                     sh "docker ps"
                 }
