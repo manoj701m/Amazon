@@ -56,12 +56,30 @@ pipeline {
                 }
             }
         }
+        stage('Stop and Remove Container on Port 9001') {
+            steps {
+                script {
+                    // Check if a container is running on port 9001
+                    def containerId = sh(script: 'docker ps -q --filter "expose=9001"', returnStdout: true).trim()
 
+                    if (containerId) {
+                        // Stop the container
+                        sh "docker stop ${containerId}"
+
+                        // Remove the container
+                        sh "docker rm ${containerId}"
+                        
+                        echo "Container on port 9001 stopped and removed."
+                    } else {
+                        echo "No container found running on port 9001."
+                    }
+                }
+            }
+        }
         stage('Run Docker Container') {
             steps {
                 script {
                     // Run Docker container
-                    sh "docker rm ${docker stop ${docker ps -q --filter "expose=9001"}}"
                     sh "docker run -d -p 9001:8080 ${DOCKERHUB_USERNAME}/${IMAGE_NAME}:${TAG}"
                     sh "docker ps"
                 }
