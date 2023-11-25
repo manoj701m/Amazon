@@ -62,6 +62,7 @@ pipeline {
                 script {
                     // Run Docker container
                     sh "docker run -d -p 9001:8080 ${DOCKERHUB_USERNAME}/${IMAGE_NAME}:${TAG}"
+                    sh "docker ps"
                 }
             }
         }
