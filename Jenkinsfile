@@ -59,7 +59,7 @@ pipeline {
         stage('Stop and Remove Container on Port 9001') {
             steps {
                 script {
-                    def containerId = sh(script: 'docker ps -q | while read -r id; do if [ "$(docker port "$id" | grep 9001)" ]; then echo "$id"; fi done', returnStatus: true).trim()
+                    def containerId = sh(script: 'docker ps -q | while read -r id; do if [ "$(docker port "$id" | grep 9001)" ]; then echo "$id"; fi done', returnStdout: true)
         
                     if (containerId) {
                         // Stop the container
