@@ -59,16 +59,15 @@ pipeline {
         stage('Stop and Remove Container on Port 9001') {
             steps {
                 script {
-                    // Check if a container is running on port 9001
-                    def containerId = sh(script: 'docker ps -q --filter "expose=9001"', returnStdout: true).trim()
-
+                    def containerId = sh(script: 'docker ps -q | while read -r id; do if [ "$(docker port "$id" | grep 9001)" ]; then echo "$id"; fi done', returnStatus: true).trim()
+        
                     if (containerId) {
                         // Stop the container
                         sh "docker stop ${containerId}"
-
+        
                         // Remove the container
                         sh "docker rm ${containerId}"
-                        
+        
                         echo "Container on port 9001 stopped and removed."
                     } else {
                         echo "No container found running on port 9001."
